@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOS团入团测试</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- Tailwind 配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sos: {
+                            orange: '#FF8C00',
+                            lightOrange: '#FFA500',
+                            darkBlue: '#00008B',
+                            lightBlue: '#1E90FF',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .message-bubble-user {
+                @apply bg-sos-lightBlue text-white rounded-tl-xl rounded-tr-xl rounded-bl-xl p-4 shadow-lg max-w-[80%] break-words;
+            }
+            .message-bubble-ai {
+                @apply bg-white text-slate-800 rounded-tl-xl rounded-tr-xl rounded-br-xl p-4 shadow-lg max-w-[80%] break-words;
+            }
+            .bg-sos-pattern {
+                background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            }
+        }
+    </style>
+</head>
+<body class="bg-sos-orange bg-sos-pattern min-h-screen flex flex-col">
+    <!-- 顶部导航 -->
+    <header class="bg-sos-darkBlue text-white shadow-lg z-10">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-white p-1 rounded-full">
+                    <img src="file:///C:/Users/74268/Documents/Tencent%20Files/742688105/nt_qq/nt_data/Pic/2025-07/Ori/901b3c7938e7df84fb91b7beceacd2fd.jpg" alt="SOS团标志" class="w-10 h-10 rounded-full">
+                </div>
+                <h1 class="text-xl md:text-2xl font-bold">SOS团入团测试</h1>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-sos-lightOrange transition-colors">
+                    <i class="fa fa-moon-o"></i>
+                </button>
+                <button id="info-btn" class="p-2 rounded-full hover:bg-sos-lightOrange transition-colors">
+                    <i class="fa fa-info-circle"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主要内容区 -->
+    <main class="flex-grow container mx-auto px-4 py-6 flex flex-col md:flex-row gap-6">
+        <!-- 侧边栏 -->
+        <aside class="hidden md:block w-64 bg-white/80 backdrop-blur-sm rounded-xl shadow-lg p-4">
+            <div class="mb-6">
+                <h2 class="text-lg font-bold text-sos-darkBlue mb-2">关于测试</h2>
+                <p class="text-slate-700 text-sm">这是SOS团的官方入团测试，通过回答问题来证明你是否具备加入我们的资格。</p>
+            </div>
+            
+            <div class="mb-6">
+                <h2 class="text-lg font-bold text-sos-darkBlue mb-2">测试进度</h2>
+                <div class="w-full bg-gray-200 rounded-full h-2.5 mb-2">
+                    <div id="progress-bar" class="bg-sos-orange h-2.5 rounded-full" style="width: 0%"></div>
+                </div>
+                <p class="text-xs text-slate-600"><span id="progress-text">0</span>/5 问题</p>
+            </div>
+            
+            <div>
+                <h2 class="text-lg font-bold text-sos-darkBlue mb-2">SOS团介绍</h2>
+                <ul class="space-y-2 text-sm">
+                    <li class="flex items-start">
+                        <i class="fa fa-check-circle text-sos-orange mt-1 mr-2"></i>
+                        <span>探索超自然现象</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fa fa-check-circle text-sos-orange mt-1 mr-2"></i>
+                        <span>寻找外星人、未来人和超能力者</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fa fa-check-circle text-sos-orange mt-1 mr-2"></i>
+                        <span>反对无聊的日常生活</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fa fa-check-circle text-sos-orange mt-1 mr-2"></i>
+                        <span>创造有趣的校园生活</span>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- 聊天区域 -->
+        <section class="flex-grow bg-white/90 backdrop-blur-md rounded-xl shadow-lg overflow-hidden flex flex-col h-[80vh] md:h-[75vh]">
+            <!-- 聊天消息区 -->
+            <div id="chat-container" class="flex-grow overflow-y-auto p-4 space-y-4">
+                <!-- 初始消息 -->
+                <div class="flex items-start space-x-3 animate-fade-in">
+                    <div class="bg-sos-darkBlue p-1 rounded-full">
+                        <img src="file:///C:/Users/74268/Desktop/%E6%96%B0%E5%BB%BA%E6%96%87%E4%BB%B6%E5%A4%B9/haruhi.jpg" alt="SOS团AI" class="w-10 h-10 rounded-full">
+                    </div>
+                    <div class="message-bubble-ai">
+                        <div class="font-bold text-sos-darkBlue mb-1">SOS团接待员</div>
+                        <p>欢迎来到SOS团入团测试！我是你的测试引导员。</p>
+                        <p class="mt-2">本次测试共有5个问题，请诚实回答。准备好了吗？</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 输入区域 -->
+            <div class="border-t border-gray-200 p-4">
+                <div class="flex items-center space-x-3">
+                    <div class="hidden md:block bg-sos-orange p-1 rounded-full">
+                        <img src="file:///C:/Users/74268/Desktop/%E6%96%B0%E5%BB%BA%E6%96%87%E4%BB%B6%E5%A4%B9/you.jpg" alt="用户头像" class="w-10 h-10 rounded-full">
+                    </div>
+                    <div class="flex-grow relative">
+                        <input 
+                            id="message-input" 
+                            type="text" 
+                            placeholder="输入你的回答..." 
+                            class="w-full px-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-sos-orange/50 focus:border-sos-orange transition-all"
+                        >
+                        <button 
+                            id="send-btn" 
+                            class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-sos-orange hover:bg-sos-lightOrange text-white p-2 rounded-full transition-colors"
+                        >
+                            <i class="fa fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-sos-darkBlue text-white py-4 mt-6">
+        <div class="container mx-auto px-4 text-center text-sm">
+            <p>SOS团 © 2025 - 本测试仅供娱乐</p>
+        </div>
+    </footer>
+
+    <!-- 信息模态框 -->
+    <div id="info-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl shadow-2xl p-6 max-w-md w-full mx-4">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold text-sos-darkBlue">关于SOS团入团测试</h2>
+                <button id="close-modal" class="text-gray-500 hover:text-gray-700">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+            <div class="text-slate-700 space-y-3">
+                <p>SOS团入团测试是一个模拟测试，用于评估你是否适合加入虚构的SOS团。</p>
+                <p>测试包含5个问题，主要涉及你对超自然现象的兴趣和态度。</p>
+                <p>测试结果仅供娱乐，不代表任何真实组织的评估。</p>
+                <p class="mt-4 font-semibold">注意：本网站使用模拟API，所有回答不会被存储。</p>
+            </div>
+            <div class="mt-6 text-center">
+                <button id="start-test" class="bg-sos-orange hover:bg-sos-lightOrange text-white px-6 py-2 rounded-full font-medium transition-colors">
+                    开始测试
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 结果模态框 -->
+    <div id="result-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl shadow-2xl p-6 max-w-md w-full mx-4">
+            <div class="text-center mb-4">
+                <div id="result-icon" class="inline-block p-4 rounded-full mb-3"></div>
+                <h2 class="text-xl font-bold text-sos-darkBlue" id="result-title"></h2>
+            </div>
+            <div class="text-slate-700 space-y-3 text-center">
+                <p id="result-message"></p>
+                <div id="result-details" class="mt-4 bg-gray-100 p-4 rounded-lg text-left">
+                    <h3 class="font-semibold mb-2">测试分析</h3>
+                    <ul id="analysis-list" class="space-y-2 text-sm"></ul>
+                </div>
+            </div>
+            <div class="mt-6 text-center">
+                <button id="restart-test" class="bg-sos-orange hover:bg-sos-lightOrange text-white px-6 py-2 rounded-full font-medium transition-colors">
+                    重新测试
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 测试问题和答案
+        const questions = [
+            "你相信世界上存在外星人吗？",
+            "如果遇到超自然现象，你会怎么做？",
+            "你认为自己是否有特殊能力？",
+            "你对日常生活感到厌倦吗？",
+            "如果你发现一个神秘的时空裂缝，你会怎么做？"
+        ];
+        
+        // 可能的回答分类
+        const answerTypes = {
+            positive: ["是", "相信", "有兴趣", "探索", "兴奋", "立刻行动", "当然", "肯定"],
+            neutral: ["不确定", "可能", "也许", "不知道", "看情况", "中立", "一般"],
+            negative: ["不", "不相信", "没兴趣", "害怕", "远离", "怀疑", "无聊", "谨慎"]
+        };
+        
+        // 测试状态
+        let currentQuestion = 0;
+        const userAnswers = [];
+        
+        // DOM 元素
+        const chatContainer = document.getElementById('chat-container');
+        const messageInput = document.getElementById('message-input');
+        const sendBtn = document.getElementById('send-btn');
+        const infoBtn = document.getElementById('info-btn');
+        const infoModal = document.getElementById('info-modal');
+        const closeModal = document.getElementById('close-modal');
+        const startTest = document.getElementById('start-test');
+        const resultModal = document.getElementById('result-modal');
+        const restartTest = document.getElementById('restart-test');
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+        const themeToggle = document.getElementById('theme-toggle');
+        
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            infoModal.classList.remove('hidden');
+            infoModal.classList.add('animate-fade-in');
+            
+            // 事件监听
+            sendBtn.addEventListener('click', sendMessage);
+            messageInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') sendMessage();
+            });
+            infoBtn.addEventListener('click', () => infoModal.classList.remove('hidden'));
+            closeModal.addEventListener('click', () => infoModal.classList.add('hidden'));
+            startTest.addEventListener('click', startNewTest);
+            restartTest.addEventListener('click', startNewTest);
+            themeToggle.addEventListener('click', toggleTheme);
+        });
+        
+        // 开始新测试
+        function startNewTest() {
+            currentQuestion = 0;
+            userAnswers.length = 0;
+            chatContainer.innerHTML = `
+                <div class="flex items-start space-x-3 animate-fade-in">
+                    <div class="bg-sos-darkBlue p-1 rounded-full">
+                        <img src="file:///C:/Users/74268/Desktop/%E6%96%B0%E5%BB%BA%E6%96%87%E4%BB%B6%E5%A4%B9/haruhi.jpg" alt="SOS团AI" class="w-10 h-10 rounded-full">
+                    </div>
+                    <div class="message-bubble-ai">
+                        <div class="font-bold text-sos-darkBlue mb-1">SOS团接待员</div>
+                        <p>好的，让我们开始测试吧！</p>
+                        <p class="mt-2 question">问题 ${currentQuestion + 1}/${questions.length}: ${questions[currentQuestion]}</p>
+                    </div>
+                </div>
+            `;
+            infoModal.classList.add('hidden');
+            resultModal.classList.add('hidden');
+            updateProgress();
+            messageInput.focus();
+        }
+        
+        // 发送消息
+        function sendMessage() {
+            const message = messageInput.value.trim();
+            if (!message) return;
+            
+            // 添加用户消息
+            addMessage('user', message);
+            
+            // 清空输入框
+            messageInput.value = '';
+            
+            // 模拟API调用延迟
+            simulateApiCall(message);
+        }
+        
+        // 模拟API调用
+        function simulateApiCall(userMessage) {
+            // 显示"正在思考"状态
+            addThinkingMessage();
+            
+            // 模拟API延迟
+            setTimeout(() => {
+                // 移除"正在思考"状态
+                removeThinkingMessage();
+                
+                // 存储用户答案
+                userAnswers.push(userMessage);
+                
+                // 根据回答类型生成AI回复
+                const answerType = classifyAnswer(userMessage);
+                let aiResponse = generateResponse(answerType, currentQuestion);
+                
+                // 如果不是最后一个问题，添加下一个问题
+                if (currentQuestion < questions.length - 1) {
+                    currentQuestion++;
+                    aiResponse += `<p class="mt-3 question">问题 ${currentQuestion + 1}/${questions.length}: ${questions[currentQuestion]}</p>`;
+                } else {
+                    // 最后一个问题回答后，处理测试结果
+                    aiResponse += `<p class="mt-3">谢谢你完成所有问题！我们正在分析你的答案...</p>`;
+                    
+                    // 延迟显示结果
+                    setTimeout(() => {
+                        showTestResult();
+                    }, 2000);
+                }
+                
+                // 添加AI回复
+                addMessage('ai', aiResponse);
+                
+                // 更新进度
+                updateProgress();
+            }, 1500);
+        }
+        
+        // 对用户回答进行分类
+        function classifyAnswer(answer) {
+            answer = answer.toLowerCase();
+            
+            for (const type in answerTypes) {
+                if (answerTypes[type].some(keyword => answer.includes(keyword.toLowerCase()))) {
+                    return type;
+                }
+            }
+            
+            return 'neutral';
+        }
+        
+        // 生成AI回复
+        function generateResponse(answerType, questionIndex) {
+            const responses = {
+                positive: [
+                    "非常好！你的好奇心正是SOS团所需要的！",
+                    "太棒了！这种积极探索的态度很适合我们！",
+                    "有趣！看来你对超自然现象有独特的见解！",
+                    "这正是我们寻找的精神！拒绝平凡，追求新奇！",
+                    "勇敢的选择！探索未知需要这样的决断力！"
+                ],
+                neutral: [
+                    "嗯，理性思考是好事，但不要被常识束缚了想象力。",
+                    "中立的态度很客观，但SOS团更需要敢于冒险的人。",
+                    "谨慎是可以理解的，但有时也要勇于尝试新事物。",
+                    "可以理解你的犹豫，但世界上总有许多无法用常理来解释的事情。",
+                    "深思熟虑是好的，但机会往往留给敢于行动的人。"
+                ],
+                negative: [
+                    "你的谨慎可以理解，但SOS团的宗旨就是探索未知！",
+                    "怀疑精神是科学的基础，但有时也要保持开放的心态。",
+                    "害怕未知是人之常情，但只有勇敢面对才能有所发现。",
+                    "看来你对平凡的生活很满意，但我们相信还有更精彩的世界等待探索！",
+                    "谨慎行事是对的，但偶尔也要有一点冒险精神！"
+                ]
+            };
+            
+            return responses[answerType][questionIndex];
+        }
+        
+        // 添加消息到聊天界面
+        function addMessage(sender, message) {
+            const isUser = sender === 'user';
+            const avatar = isUser 
+                ? 'file:///C:/Users/74268/Desktop/%E6%96%B0%E5%BB%BA%E6%96%87%E4%BB%B6%E5%A4%B9/you.jpg' 
+                : 'file:///C:/Users/74268/Desktop/%E6%96%B0%E5%BB%BA%E6%96%87%E4%BB%B6%E5%A4%B9/haruhi.jpg';
+            const avatarBg = isUser ? 'bg-sos-orange' : 'bg-sos-darkBlue';
+            const bubbleClass = isUser ? 'message-bubble-user' : 'message-bubble-ai';
+            const name = isUser ? '你' : 'SOS团接待员';
+            const nameClass = isUser ? 'text-white' : 'text-sos-darkBlue';
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `flex items-start space-x-3 animate-fade-in ${isUser ? 'justify-end' : 'justify-start'}`;
+            messageDiv.innerHTML = `
+                ${isUser ? '' : `
+                    <div class="${avatarBg} p-1 rounded-full">
+                        <img src="${avatar}" alt="${isUser ? '用户头像' : 'SOS团AI'}" class="w-10 h-10 rounded-full">
+                    </div>
+                `}
+                <div class="${bubbleClass}">
+                    <div class="font-bold ${nameClass} mb-1">${name}</div>
+                    <p>${message}</p>
+                </div>
+                ${isUser ? `
+                    <div class="${avatarBg} p-1 rounded-full">
+                        <img src="${avatar}" alt="${isUser ? '用户头像' : 'SOS团AI'}" class="w-10 h-10 rounded-full">
+                    </div>
+                ` : ''}
+            `;
+            
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+        
+        // 添加"正在思考"消息
+        function addThinkingMessage() {
+            const thinkingDiv = document.createElement('div');
+            thinkingDiv.id = 'thinking-message';
+            thinkingDiv.className = 'flex items-start space-x-3 animate-fade-in';
+            thinkingDiv.innerHTML = `
+                <div class="bg-sos-darkBlue p-1 rounded-full">
+                    <img src="file:///C:/Users/74268/Desktop/%E6%96%B0%E5%BB%BA%E6%96%87%E4%BB%B6%E5%A4%B9/haruhi.jpg" alt="SOS团AI" class="w-10 h-10 rounded-full">
+                </div>
+                <div class="message-bubble-ai">
+                    <div class="font-bold text-sos-darkBlue mb-1">SOS团接待员</div>
+                    <div class="flex space-x-1">
+                        <div class="w-2 h-2 bg-gray-500 rounded-full animate-bounce"></div>
+                        <div class="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                        <div class="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style="animation-delay: 0.4s"></div>
+                    </div>
+                </div>
+            `;
+            
+            chatContainer.appendChild(thinkingDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+        
+        // 移除"正在思考"消息
+        function removeThinkingMessage() {
+            const thinkingMessage = document.getElementById('thinking-message');
+            if (thinkingMessage) {
+                thinkingMessage.remove();
+            }
+        }
+        
+        // 显示测试结果
+        function showTestResult() {
+            // 分析用户回答
+            const analysis = analyzeAnswers(userAnswers);
+            
+            // 更新结果模态框内容
+            const resultIcon = document.getElementById('result-icon');
+            const resultTitle = document.getElementById('result-title');
+            const resultMessage = document.getElementById('result-message');
+            const analysisList = document.getElementById('analysis-list');
+            
+            // 设置结果图标和标题
+            if (analysis.score >= 70) {
+                resultIcon.className = 'inline-block p-4 bg-green-100 text-green-600 rounded-full mb-3';
+                resultIcon.innerHTML = '<i class="fa fa-check-circle text-3xl"></i>';
+                resultTitle.textContent = '测试通过！';
+                resultTitle.className = 'text-xl font-bold text-green-600';
+                resultMessage.textContent = `恭喜你，你的得分是 ${analysis.score} 分！你非常适合加入SOS团！我们期待与你一起探索超自然现象！`;
+            } else if (analysis.score >= 40) {
+                resultIcon.className = 'inline-block p-4 bg-yellow-100 text-yellow-600 rounded-full mb-3';
+                resultIcon.innerHTML = '<i class="fa fa-minus-circle text-3xl"></i>';
+                resultTitle.textContent = '有待观察';
+                resultTitle.className = 'text-xl font-bold text-yellow-600';
+                resultMessage.textContent = `你的得分是 ${analysis.score} 分。你有一定的潜力，但还需要更多的热情和好奇心。我们会继续观察你的表现！`;
+            } else {
+                resultIcon.className = 'inline-block p-4 bg-red-100 text-red-600 rounded-full mb-3';
+                resultIcon.innerHTML = '<i class="fa fa-times-circle text-3xl"></i>';
+                resultTitle.className = 'text-xl font-bold text-red-600';
+                resultTitle.textContent = '测试未通过';
+                resultMessage.textContent = `你的得分是 ${analysis.score} 分。看来SOS团的活动不太符合你的兴趣。不过，保持开放的心态，也许有一天你会改变主意！`;
+            }
+            
+            // 设置分析列表
+            analysisList.innerHTML = '';
+            analysis.details.forEach(detail => {
+                const li = document.createElement('li');
+                li.className = 'flex items-start';
+                
+                const iconClass = detail.positive 
+                    ? 'fa fa-check text-green-500 mt-1 mr-2' 
+                    : 'fa fa-times text-red-500 mt-1 mr-2';
+                
+                li.innerHTML = `
+                    <i class="${iconClass}"></i>
+                    <span>${detail.text}</span>
+                `;
+                
+                analysisList.appendChild(li);
+            });
+            
+            // 显示结果模态框
+            resultModal.classList.remove('hidden');
+        }
+        
+        // 分析用户回答
+        function analyzeAnswers(answers) {
+            let score = 0;
+            const details = [];
+            
+            answers.forEach((answer, index) => {
+                const answerType = classifyAnswer(answer);
+                let points = 0;
+                let positive = false;
+                
+                if (answerType === 'positive') {
+                    points = 20;
+                    positive = true;
+                } else if (answerType === 'neutral') {
+                    points = 10;
+                } else {
+                    points = 0;
+                }
+                
+                score += points;
+                
+                details.push({
+                    text: `问题 ${index + 1}: "${questions[index]}" - ${answerType === 'positive' ? '积极回答' : answerType === 'neutral' ? '中立回答' : '消极回答'}`,
+                    positive
+                });
+            });
+            
+            return {
+                score,
+                details
+            };
+        }
+        
+        // 更新进度条
+        function updateProgress() {
+            const progress = (currentQuestion / questions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            progressText.textContent = currentQuestion;
+        }
+        
+        // 切换主题
+        function toggleTheme() {
+            const body = document.body;
+            if (body.classList.contains('bg-sos-orange')) {
+                body.classList.remove('bg-sos-orange', 'bg-sos-pattern');
+                body.classList.add('bg-slate-900');
+                themeToggle.innerHTML = '<i class="fa fa-sun-o"></i>';
+            } else {
+                body.classList.remove('bg-slate-900');
+                body.classList.add('bg-sos-orange', 'bg-sos-pattern');
+                themeToggle.innerHTML = '<i class="fa fa-moon-o"></i>';
+            }
+        }
+        
+        // 添加动画类
+        document.head.insertAdjacentHTML('beforeend', `
+            <style>
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: translateY(10px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+                
+                .animate-fade-in {
+                    animation: fadeIn 0.3s ease-out forwards;
+                }
+                
+                @keyframes bounce {
+                    0%, 100% { transform: translateY(0); }
+                    50% { transform: translateY(-5px); }
+                }
+                
+                .animate-bounce {
+                    animation: bounce 1s infinite;
+                }
+            </style>
+        `);
+    </script>
+</body>
+</html>
+    
